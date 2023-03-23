@@ -2,7 +2,7 @@ import whisper
 import ffmpeg
 import os
 
-def transcribe(audio_url):
+def transcribe(audio_url:str)->str:
     '''
          Extracting text from the audio.
          
