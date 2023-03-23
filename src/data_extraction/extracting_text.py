@@ -4,36 +4,26 @@ import os
 import pandas as pd
 
 
-def Extracting_text_from_audio(video_info:list)->pd.DataFrame:
+def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
     '''
     Takes the video_info and extracts text from audio_to_text module and convertes it into dataframe
     
     Parameters:
     -----------
-    vedio_info: list
+    video_info: list
        It contains all infromation about the playlist which have mentioned in the module video_info.
-       
-    Returns:
-    --------
-      data: pd.DataFrame
-          returns the dataframe containing infromation about 
-          'title':Video title
-          'url': Video URL
-          'id': Video id
-          'start': Start Time of a phrase
-          'end': End Time of a phrase
-          'text': The sentence spoke during the start time and end time
+    audio_path : str
+            audio path to store audio files
+    data_path : str
+        path to store dataframes
+    Returns: None
     
     '''
-    directory = "audio_files"
-    parent_dir = "C:/Users/NHI360/Desktop/ml-youtube-search/src/data_extraction/"
-    path = parent_dir+directory
-    print(path)
-    #os.environ['FFMPEG_PATH'] = 'C:/Users/NHI360/Downloads/ffmpeg-2023-03-20-git-57afccc0ef-full_build/ffmpeg-2023-03-20-git-57afccc0ef-full_build/bin/ffmpeg'
+
     #options to download only audio of youtube video
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': path+'/%(title)s.%(ext)s',
+        'outtmpl': str(audio_path /'%(title)s.%(ext)s'),
         'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
@@ -44,9 +34,10 @@ def Extracting_text_from_audio(video_info:list)->pd.DataFrame:
         
     }
     ydl = yt_dlp.YoutubeDL(ydl_opts)
-    data = pd.DataFrame(columns=['title','url','id','start','end','text'])
+    
     #Extracting text
-    for video in video_info:
+    for i in range(len(video_info)):
+      video = video_info[i]
       url = video['webpage_url']
       ydl.download([url])
       filename = ydl.prepare_filename(video)
@@ -58,10 +49,10 @@ def Extracting_text_from_audio(video_info:list)->pd.DataFrame:
       df['title'] = video['title']
       df['url'] = video['webpage_url']
       df = df.reindex(columns=['title','url','id','start','end','text'])
-      data = pd.concat([data,df],axis=0,ignore_index=True)
-      print(data)
-    return data
-
+      print(df)
+      df.to_csv(str(data_path / f"video_{i+1}.csv"),sep = ',',index=False)
+      print(df)
+      print(str(data_path / f"{video['title']}.csv"))
 
 
 

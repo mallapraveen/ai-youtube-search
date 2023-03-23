@@ -1,7 +1,7 @@
 import yt_dlp
 import os
 
-def videos_info(url:str)->list:
+def videos_info(url:str,audio_path:str)->list:
     '''
        Extracting complete information about the playlist
        
@@ -9,6 +9,8 @@ def videos_info(url:str)->list:
        -----------
           url: str
             The youtube plalist url from user
+          audio_path : str
+            audio path to store audio files
        
        returns:
        --------
@@ -34,26 +36,11 @@ def videos_info(url:str)->list:
            'resolution', 'aspect_ratio', 'http_headers', 'audio_ext', 'video_ext',
            'format']
     '''
-    
-    #Creating directory to store audio files
-    directory = "audio_files"
-    parent_dir = "C:/Users/NHI360/Desktop/ml-youtube-search/src/data_extraction/"
-    path = parent_dir+directory
-    
-    #checking the path existence is OS
-    if os.path.exists(path):
-        print("It already exists")
-    else:
-        path = os.path.join(parent_dir, directory)
-        os.makedirs(path, mode = 0o777, exist_ok = False)
-        print("Directory '% s' created" % directory)
 
-    print(path)
-    
     #options to download only audio of youtube video
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': path+'/%(title)s.%(ext)s',
+        'outtmpl': str(audio_path /'%(title)s.%(ext)s'),
         'postprocessors': [{
         'key': 'FFmpegExtractAudio',
         'preferredcodec': 'mp3',
