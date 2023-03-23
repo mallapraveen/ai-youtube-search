@@ -4,7 +4,27 @@ import os
 import pandas as pd
 
 
-def Extracting_text_from_audio(video_info):
+def Extracting_text_from_audio(video_info:list)->pd.DataFrame:
+    '''
+    Takes the video_info and extracts text from audio_to_text module and convertes it into dataframe
+    
+    Parameters:
+    -----------
+    vedio_info: list
+       It contains all infromation about the playlist which have mentioned in the module video_info.
+       
+    Returns:
+    --------
+      data: pd.DataFrame
+          returns the dataframe containing infromation about 
+          'title':Video title
+          'url': Video URL
+          'id': Video id
+          'start': Start Time of a phrase
+          'end': End Time of a phrase
+          'text': The sentence spoke during the start time and end time
+    
+    '''
     directory = "audio_files"
     parent_dir = "C:/Users/NHI360/Desktop/ml-youtube-search/src/data_extraction/"
     path = parent_dir+directory
