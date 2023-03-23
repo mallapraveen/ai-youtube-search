@@ -3,6 +3,21 @@ import ffmpeg
 import os
 
 def transcribe(audio_url):
+    '''
+         Extracting text from the audio.
+         
+      Parameters:
+      -----------
+        audio_url: str
+         The audio file location in the particular directory
+       
+      returns:
+      --------
+         result: str
+            The extracted Text from audio in the form of string
+    
+    
+    '''
     if not os.path.exists(audio_url):
         print(f"File not found at path: {audio_url}")
     else:
