@@ -3,7 +3,9 @@ import os
 
 def videos_info(url:str)->list:
     '''
-    
+    In this module we are getting url as input string and we are initializing the options to download the audio of a youtube vedio. To get the audio in the desried 
+    location we are setting up path of current working directory and a folder to store all the audio files. As of now this module can return only the playlist info
+    playlist entries like 
     '''
     
     #Creating directory to store audio files
