@@ -2,7 +2,19 @@ import yt_dlp
 import video_info ,audio_to_text,data_modify
 import os
 import pandas as pd
+import copy
+from pathlib import Path
+import logging
 
+#Setting the log data pth
+log_path = Path.cwd()/ 'log_data.log'
+if log_path.exists()==False:
+    log_path.touch
+
+#Setting configuration for logging
+logging.basicConfig(level = logging.DEBUG,
+                    filename=log_path,
+                    format= "[%(asctime)s: %(levelname)s]: %(message)s")
 
 def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
     '''
@@ -35,6 +47,7 @@ def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
     }
     ydl = yt_dlp.YoutubeDL(ydl_opts)
     
+     
     #Extracting text
     Final_dataset=pd.DataFrame()
     for i in range(len(video_info)):
@@ -51,12 +64,14 @@ def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
       df['title'] = video['title']
       df['url'] = video['webpage_url']
       df = df.reindex(columns=['title','url','id','start','end','text'])
-      print(df)
-      df.to_csv(str(data_path / f"dataset_{i+1}.csv"),sep = ',',index=False)
-      print(df)
-      print(str(data_path / f"{video['title']}.csv"))
-      print("Completed extracting text")
+      h=copy.deepcopy(df)
+      h['start'].astype('float32')
+      h['end'].astype('float32')
+      df1=data_modify.combine_rows1(h)
+      Final_dataset = pd.concat([Final_dataset,df1],axis=0)
+      Final_dataset.reset_index(drop=True,inplace=True)
 
-
-
-
+    Final_dataset['duration']=Final_dataset['end']-Final_dataset['start']
+    Final_dataset = Final_dataset.reindex(columns=['title','url','id','start','end','text'])
+    logging.info("Completed")
+    return Final_dataset
