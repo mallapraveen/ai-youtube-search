@@ -1,4 +1,4 @@
-import audio_to_text ,extracting_text,video_info,data_modify
+import audio_to_text ,extracting_text,video_info
 from pathlib import Path
 import pandas as pd
 import time 
@@ -6,15 +6,15 @@ import csv
 
 start = time.time()
 #Creating audio path for storing audio files
-audio_path = Path.cwd() / 'audio_files'
+audio_path = Path.cwd().parent / 'audio_files'
 if audio_path.exists() == True:
     print("Already exists")
 else:
     audio_path.mkdir()
 print(f"Audio Path : {audio_path}")
 
-#Crating data path for storing data files
-data_path = Path.cwd() / 'data_files'
+#Creating data path for storing data files
+data_path = Path.cwd().parent / 'data_files'
 if data_path.exists() == True:
     print("Already exists")
 else:
@@ -27,4 +27,5 @@ df=extracting_text.Extracting_text_from_audio(info,audio_path)
 
 df.to_csv(str(data_path / "modified_data.csv"),sep = ',',index=False)
 
-print(f"time : {time.time()-start:5f}  secs")
+elapsed_time = (time.time() - start) / 60  
+print(f"Elapsed time: {elapsed_time:.2f} minutes")

@@ -1,4 +1,3 @@
-
 def combine_rows1(df):
   i=0
   while i<len(df) and i+5<len(df):

@@ -51,6 +51,7 @@ def Extracting_text_from_audio(video_info:list,audio_path:str):
       df['url'] = video['webpage_url']
       df = df.reindex(columns=['title','url','id','start','end','text'])
 
+
       h=copy.deepcopy(df)
       h['start'].astype('float32')
       h['end'].astype('float32')
@@ -61,6 +62,7 @@ def Extracting_text_from_audio(video_info:list,audio_path:str):
 
     Final_dataset['duration']=Final_dataset['end']-Final_dataset['start']
     return Final_dataset
+
 
 
 
