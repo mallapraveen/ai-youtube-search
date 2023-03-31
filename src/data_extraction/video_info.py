@@ -1,5 +1,14 @@
 import yt_dlp
 import os
+import logging
+from pathlib import Path
+
+log_path = Path.cwd()/ 'log_data.log'
+if log_path.exists()==False:
+    log_path.touch
+logging.basicConfig(level = logging.DEBUG,
+                    filename=log_path,
+                    format= "[%(asctime)s: %(levelname)s]: %(message)s")
 
 def videos_info(url:str,audio_path:str)->list:
     '''
@@ -55,7 +64,7 @@ def videos_info(url:str,audio_path:str)->list:
     playlist_info = ydl.extract_info(url, download=False)
     #For the information about videos in playlist
     playlist_entries = playlist_info.get('entries',None)
-    print("Extracted playlist info successfully")
+    logging.info("Extracted playlist information")
     return playlist_entries
 
 

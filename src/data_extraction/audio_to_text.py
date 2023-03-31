@@ -1,7 +1,13 @@
 import whisper
-import ffmpeg
-import os
+from pathlib import Path
+import logging
 
+log_path = Path.cwd() / 'log_data.log'
+if log_path.exists()==False:
+   log_path.touch
+logging.basicConfig(level = logging.DEBUG,
+                    filename=log_path,
+                    format= "[%(asctime)s: %(levelname)s]: %(message)s")
 def transcribe(audio_url:str)->str:
     '''
          Extracting text from the audio.
@@ -20,5 +26,5 @@ def transcribe(audio_url:str)->str:
     '''
     model = whisper.load_model("tiny")
     result = model.transcribe(audio_url,fp16=False)
-    print("audio Success")
+    logging.info("Transcribed the audio")
     return result
