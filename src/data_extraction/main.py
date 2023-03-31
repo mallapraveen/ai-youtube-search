@@ -12,8 +12,8 @@ else:
     audio_path.mkdir()
 print(f"Audio Path : {audio_path}")
 
-#Crating data path for storing data files
-data_path = Path.cwd() / 'data_files'
+#Creating data path for storing data files
+data_path = Path.cwd()/ 'data_files'
 if data_path.exists() == True:
     print("Already exists")
 else:
@@ -29,4 +29,5 @@ df=data_modify.combine_datasets(data_path)
 modify_path=Path.cwd()
 df.to_csv(str(modify_path / "modified_data.csv"),sep = ',',index=False)
 
-print(f"time : {time.time()-start:5f}  secs")
+elapsed_time = (time.time() - start) / 60  
+print(f"Elapsed time: {elapsed_time:.2f} minutes")

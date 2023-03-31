@@ -12,7 +12,7 @@ def combine_rows(df):
     text=df.loc[j,'text']
     start=df.loc[j,'start']
     while k+df.loc[j+1,'duration']<25 and j+1<len(df)-1:
-      text=text+' '+df.loc[j+1,'text']
+      text=text+df.loc[j+1,'text']
       k+=df.loc[j+1,'duration']
       j+=1
     

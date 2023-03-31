@@ -50,9 +50,10 @@ def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
       df['url'] = video['webpage_url']
       df = df.reindex(columns=['title','url','id','start','end','text'])
       print(df)
-      df.to_csv(str(data_path / f"video_{i+1}.csv"),sep = ',',index=False)
+      df.to_csv(str(data_path / f"dataset_{i+1}.csv"),sep = ',',index=False)
       print(df)
       print(str(data_path / f"{video['title']}.csv"))
+      print("Completed extracting text")
 
 
 
