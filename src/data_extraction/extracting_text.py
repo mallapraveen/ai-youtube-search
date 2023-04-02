@@ -5,6 +5,7 @@ import pandas as pd
 import copy
 from pathlib import Path
 import logging
+import csv
 
 #Setting the log data pth
 log_path = Path.cwd()/ 'log_data.log'
@@ -64,6 +65,7 @@ def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
       df['title'] = video['title']
       df['url'] = video['webpage_url']
       df = df.reindex(columns=['title','url','id','start','end','text'])
+
       h=copy.deepcopy(df)
       h['start'].astype('float32')
       h['end'].astype('float32')
@@ -71,7 +73,7 @@ def Extracting_text_from_audio(video_info:list,audio_path:str,data_path:str):
       Final_dataset = pd.concat([Final_dataset,df1],axis=0)
       Final_dataset.reset_index(drop=True,inplace=True)
 
-    Final_dataset['duration']=Final_dataset['end']-Final_dataset['start']
-    Final_dataset = Final_dataset.reindex(columns=['title','url','id','start','end','text'])
-    logging.info("Completed")
-    return Final_dataset
+      Final_dataset['duration']=Final_dataset['end']-Final_dataset['start']
+      Final_dataset = Final_dataset.reindex(columns=['title','url','id','start','end','text','duration'])
+      Final_dataset.to_csv(str(data_path / "modified_data.csv"),sep = ',',index=False)
+      logging.info("Completed")
