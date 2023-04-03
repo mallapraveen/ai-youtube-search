@@ -132,4 +132,4 @@ dmypy.json
 *.log
 
 # audio files
-*.mp3
+audio_files/
