@@ -1,9 +1,7 @@
 {
     "python.analysis.extraPaths": [
         "./env/Lib/site-packages"
-    ]
-    
+    ],
+    "editor.tabCompletion": "on",
+    "diffEditor.codeLens": true
 }
-
-
-

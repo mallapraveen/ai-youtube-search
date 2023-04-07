@@ -134,3 +134,8 @@ dmypy.json
 # audio files
 audio_files/
 
+# vscode
+.vscode/*
+
+# csv files
+*.csv

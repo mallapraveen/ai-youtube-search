@@ -1,42 +1,37 @@
-import audio_to_text ,extracting_text,video_info
-from pathlib import Path
 import pandas as pd
-import time 
-import logging
+import os
+from pathlib import Path
 
-#Setting the log data pth
-log_path = Path.cwd()/ 'log_data.log'
-if log_path.exists()==False:
-    log_path.touch
+from extracting_text import extracting_text_from_audio
+from youtube_info import videos_info
 
-#Setting configuration for logging
-logging.basicConfig(level = logging.DEBUG,
-                    filename=log_path,
-                    format= "[%(asctime)s: %(levelname)s]: %(message)s")
-logging.info("Data Extraction Started")
+from data_extraction import logger
+from utilities.time_wrapper import timeit
 
-start = time.time()
-#Creating audio path for storing audio files
-audio_path = Path.cwd() / 'audio_files'
-if audio_path.exists() == False:
-    audio_path.mkdir()
-logging.info(f"Audio Path : {audio_path}")
 
-#Creating data path for storing data files
-data_path = Path.cwd() / 'data_files'
-if data_path.exists() == False:
-    data_path.mkdir()
-logging.info(f"Data Path : {data_path}")
-url = 'https://www.youtube.com/watch?v=J4Wdy0Wc_xQ&list=PLblh5JKOoLUIE96dI3U7oxHaCAbZgfhHk'
+@timeit
+def data_extract():
+    # Creating audio path for storing audio files
+    audio_path = "./audio_files"
+    os.makedirs(audio_path, exist_ok=True)
+    logger.info(f"Audio Path : {audio_path}")
 
-#created empty dataframe to store
-data_set = pd.DataFrame(columns=['title','url','id','start','end','duration','text'])
-data_set.to_csv(str(data_path / "data_set.csv"),sep = ',',index=False)
-logging.info("Created empty dataframe")
-#Extracting playlist info
-info = video_info.videos_info(url,audio_path)
-extracting_text.Extracting_text_from_audio(info,audio_path,data_path)
+    # Creating data path for storing data files
+    data_path = "./data_files"
+    os.makedirs(data_path, exist_ok=True)
+    logger.info(f"Data Path : {data_path}")
+    url = "https://www.youtube.com/watch?v=J4Wdy0Wc_xQ&list=PLblh5JKOoLUIE96dI3U7oxHaCAbZgfhHk"
 
-elapsed_time = (time.time() - start) / 60  
-print(f"Elapsed time: {elapsed_time:.2f} minutes")
-logging.info(f"Elapsed time: {elapsed_time:.2f} minutes")
+    # created empty dataframe to store
+    data_set = pd.DataFrame(
+        columns=["title", "url", "id", "start", "end", "duration", "text"]
+    )
+    data_set.to_csv(Path(data_path + "/data_set.csv"), sep=",", index=False)
+    logger.info("Created empty dataframe")
+    # Extracting playlist info
+    info = videos_info(url, audio_path)
+    extracting_text_from_audio(info, audio_path, data_path)
+
+
+if __name__ == "__main__":
+    data_extract()
