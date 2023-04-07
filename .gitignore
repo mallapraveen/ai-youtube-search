@@ -132,10 +132,10 @@ dmypy.json
 *.log
 
 # audio files
-audio_files/
+*.mp3
 
 # vscode
-.vscode/*
+.vscode
 
 # csv files
 *.csv
