@@ -5,7 +5,7 @@ from pathlib import Path
 from data_extraction import logger
 
 
-def extracting_text_from_audio(video_info: list, audio_path: str, data_path: str):
+def extracting_data_from_playlist(video_info: list, audio_path: str, data_path: str):
     """
     Takes the video_info and extracts text from audio_to_text module and convertes it into dataframe
 
@@ -20,7 +20,6 @@ def extracting_text_from_audio(video_info: list, audio_path: str, data_path: str
     Returns: None
 
     """
-
     # options to download only audio of youtube video
     ydl_opts = {
         "format": "bestaudio/best",
@@ -54,8 +53,7 @@ def extracting_text_from_audio(video_info: list, audio_path: str, data_path: str
         df["start"].astype("float32")
         df["end"].astype("float32")
         df = df.reindex(columns=["title", "url", "id", "start", "end", "text"])
-        data_set = pd.read_csv(data_path + "/data_set.csv")
-        res = df.groupby(df.index // 5).agg(
+        df = df.groupby(df.index // 5).agg(
             {
                 "title": "first",
                 "url": "first",
@@ -65,10 +63,19 @@ def extracting_text_from_audio(video_info: list, audio_path: str, data_path: str
                 "text": lambda x: "".join(x),
             }
         )
-        res["duration"] = res["end"] - res["start"]
-        res = res.reindex(
+        df["duration"] = df["end"] - df["start"]
+        df = df.reindex(
             columns=["title", "url", "id", "start", "end", "duration", "text"]
         )
-        data_set = pd.concat([data_set, res], axis=0)
-        data_set.to_csv(data_path + "/data_set.csv", sep=",", index=False)
+        df["duration"] = df["end"] - df["start"]
+        df.to_csv(
+            data_path,
+            mode="a",
+            header=False,
+        )
+
+    pd.read_csv(
+        data_path, names=["title", "url", "id", "start", "end", "duration", "text"]
+    ).reset_index(drop=True).to_csv(data_path)
+
     logger.info("Completed")
