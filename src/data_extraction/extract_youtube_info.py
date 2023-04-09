@@ -37,13 +37,17 @@ def extracting_data_from_playlist(video_info: list, audio_path: str, data_path: 
     ydl = yt_dlp.YoutubeDL(ydl_opts)
 
     # Extracting text
-    for i in range(len(video_info)):
+    for i in range(72, len(video_info)):
         video = video_info[i]
         url = video["webpage_url"]
         ydl.download([url])
         logger.info(f"Downloaded video {i+1}")
         filename = ydl.prepare_filename(video)
-        filename = filename.replace("webm", "mp3")
+        filename = (
+            filename.replace(".webm", ".mp3")
+            .replace(".mp4", ".mp3")
+            .replace(".mkv", ".mp3")
+        )
         result = audio_to_text.transcribe(filename)
         seg = result["segments"]
         df = pd.DataFrame(seg, columns=["start", "end", "text", "id"])

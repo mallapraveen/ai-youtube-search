@@ -26,5 +26,5 @@ def extract_playlist_data(url):
 
 
 if __name__ == "__main__":
-    url = "https://www.youtube.com/watch?v=J4Wdy0Wc_xQ&list=PLblh5JKOoLUIE96dI3U7oxHaCAbZgfhHk"
+    url = "https://www.youtube.com/playlist?list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF"
     extract_playlist_data(url)
