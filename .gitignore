@@ -132,5 +132,7 @@ dmypy.json
 *.log
 
 # audio files
-audio_files/
+*.mp3
 
+# vscode
+.vscode

@@ -3,12 +3,12 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as f:
     long_description = f.read()
 
-__version__ = "0.0.0" # update as per your need
+__version__ = "0.0.0"  # update as per your need
 
-REPO_NAME = "<YOUR REPO NAME>"
-AUTHOR_USER_NAME = "<YOUR USERNAME>"
-SRC_REPO = "<YOUR REPO NAME>"
-AUTHOR_EMAIL = "<YOUR EMAIL ID>"
+REPO_NAME = "ai-youtube-search"
+AUTHOR_USER_NAME = "mallapraveen"
+SRC_REPO = "ai-youtube-search"
+AUTHOR_EMAIL = "mallapraveen@outlook.com"
 
 setuptools.setup(
     name=SRC_REPO,
@@ -23,5 +23,5 @@ setuptools.setup(
         "Bug Tracker": f"https://github.com/{AUTHOR_USER_NAME}/{REPO_NAME}/issues",
     },
     package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src")
+    packages=setuptools.find_packages(where="src"),
 )
