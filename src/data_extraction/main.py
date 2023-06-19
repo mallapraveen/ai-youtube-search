@@ -20,9 +20,12 @@ def extract_playlist_data(url):
     # Creating audio path for storing platlist audio files
     audio_path = f"./audio_files/playlist_audio/{playlist_name}"
 
-    # Creating data path for storing data files
-    df_path = f"./data_files/videos_info/playlist_info/{playlist_name}.csv"
-    extracting_data_from_playlist(info, audio_path, df_path)
+start = time.time()
+#Creating audio path for storing audio files
+audio_path = Path.cwd() / 'audio_files'
+if audio_path.exists() == False:
+    audio_path.mkdir()
+logging.info(f"Audio Path : {audio_path}")
 
 
 if __name__ == "__main__":
