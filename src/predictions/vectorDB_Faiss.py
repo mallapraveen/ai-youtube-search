@@ -15,9 +15,3 @@ class faiss_db:
 
         #Total number of embeddings added
         print(self.index.ntotal)
-
-    def searching_vectors(self,Xq_emb: str)->list:
-            
-            D, I = self.index.search(Xq_emb,5)
-
-            return I
