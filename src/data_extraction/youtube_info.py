@@ -24,4 +24,6 @@ def playlist_info(url: str) -> list:
   # For the information about videos in playlist
   playlist_entries = playlist.get("entries", None)
   logger.info("Extracted playlist information")
+  if playlist_entries==None:
+    return playlist
   return playlist_entries
